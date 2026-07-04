@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"RoadToTechlead/ownredis/connection"
+	"fmt"
+)
 
-func main(){
-	fmt.Println("Hallo Go")
+func main() {
+	fmt.Println("Starte Server")
+	connection.StartListener()
 }
