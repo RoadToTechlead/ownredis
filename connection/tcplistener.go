@@ -24,17 +24,21 @@ func StartListener() {
 		conn, err := ln.Accept() //Blockieren, bis Client anklopft
 		if err != nil {
 			fmt.Println("Verbindung konnte nicht akzeptiert werden.")
+			continue // damit
 		}
 		go handleConnection(conn)
 	}
 }
 
 func handleConnection(conn net.Conn) {
+	/*
+		Sicherstellen, dass die Verbindung wieder getrennt wird. Mit defer wird
+		sichergestellt, dass conn.Close() aufgerufen wird, unabhängig vom Ergebnis
+	*/
+	defer conn.Close()
 	// Befüllen des internen Byte Arrays (Puffers)
 	read_ := bufio.NewReader(conn)
-	
+	//Byte Array auslesen
 	b, err := read_.ReadByte()
-
-	//Sicherstellen, dass die Verbindung wieder getrennt wird
-	defer conn.Close()
+	fmt.Println(b)
 }
