@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strconv"
 	"strings"
 )
 
@@ -41,14 +42,17 @@ func handleConnection(conn net.Conn) {
 	read_ := bufio.NewReader(conn)
 	//Anzahl der Elemente anzeigen
 	b, err := read_.ReadString('\n')
-	result := strings.Trim(b, "*")
-	fmt.Printf("%q laenge=%d\n", result, len(result))
-	// loop
-	//for i := 0; i <= b; i += 1 {
-
-	//}
+	result, err := strconv.Atoi(strings.TrimSpace(strings.TrimPrefix(b, "*"))) // * und \r\n entfernen
+	//zeigt ungefilterten/quoted String
 	if err != nil {
-		fmt.Println("Erstes Byte konnte nicht gelesen werden.")
+		fmt.Println("String result konnte nicht geparst werden")
 	}
-	fmt.Println(b)
+	// loop
+	for i := 0; i <= result; i += 1 {
+
+	}
+	//if err != nil {
+	//	fmt.Println("Erstes Byte konnte nicht gelesen werden.")
+	//}
+	fmt.Println(result)
 }
