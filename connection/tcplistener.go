@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strings"
 )
 
 func StartListener() {
@@ -38,7 +39,16 @@ func handleConnection(conn net.Conn) {
 	defer conn.Close()
 	// Befüllen des internen Byte Arrays (Puffers)
 	read_ := bufio.NewReader(conn)
-	//Byte Array auslesen
-	b, err := read_.ReadByte()
+	//Anzahl der Elemente anzeigen
+	b, err := read_.ReadString('\n')
+	result := strings.Trim(b, "*")
+	fmt.Printf("%q laenge=%d\n", result, len(result))
+	// loop
+	//for i := 0; i <= b; i += 1 {
+
+	//}
+	if err != nil {
+		fmt.Println("Erstes Byte konnte nicht gelesen werden.")
+	}
 	fmt.Println(b)
 }
